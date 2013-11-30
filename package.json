@@ -1,9 +1,11 @@
 {
   "name": "bud",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Example backend server for Bud",
   "main": "index.js",
-  "bin": { "bud.js": "./bin/bud.js" },
+  "bin": {
+    "bud.js": "./bin/bud.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
