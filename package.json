@@ -4,7 +4,7 @@
   "description": "Example backend server for Bud",
   "main": "index.js",
   "bin": {
-    "bud-backend": "./bin/bud.js"
+    "bud-backend": "./bin/bud-backend.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
