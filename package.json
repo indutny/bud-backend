@@ -1,0 +1,16 @@
+{
+  "name": "bud",
+  "version": "0.0.0",
+  "description": "Example backend server for Bud",
+  "main": "index.js",
+  "bin": { "bud.js": "./bin/bud.js" },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fedor Indutny",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~3.4.5",
+    "optimist": "~0.6.0"
+  }
+}
