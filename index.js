@@ -2,7 +2,7 @@ var express = require('express');
 var http = require('http');
 var util = require('util');
 var url = require('url');
-var der = require('./der');
+var rfc2560 = require('asn1.js-rfc2560');
 var Buffer = require('buffer').Buffer;
 
 var bud = exports;
@@ -43,18 +43,43 @@ function initSNI(app, options) {
 function initOCSP(app, options) {
   var cache = {};
 
-  function cacheAdd(key, value, ocsp) {
-    if (ocsp.status !== 'successful')
+  function cacheAdd(key, value, ocspRaw) {
+    try {
+      var ocsp = rfc2560.OCSPResponse.decode(ocspRaw, 'der');
+
+      if (ocsp.responseStatus !== 'successful')
+        return;
+
+      // Unknown response type
+      if (ocsp.responseBytes.responseType !== 'id-pkix-ocsp-basic')
+        return;
+
+      var basic = rfc2560.BasicOCSPResponse.decode(ocsp.responseBytes.response,
+                                                   'der');
+    } catch (e) {
+      // Ignore error
+      console.log(e.stack);
       return;
-    if (!ocsp.data || ocsp.data.responses.length === 0)
+    }
+
+    // Not enough responses
+    if (basic.tbsResponseData.responses.length === 0)
+      return;
+    var responses = basic.tbsResponseData.responses;
+
+    var good = responses.every(function(response) {
+      return response.certStatus.type === 'good';
+    });
+
+    // No good - no cache
+    if (!good)
       return;
 
-    // Find minimum next update time
+    // Find minimum nextUpdate time
     var nextUpdate = 0;
-    var responses = ocsp.data.responses;
     for (var i = 0; i < responses.length; i++) {
       var response = responses[i];
-      var responseNext = +response.nextUpdate;
+      var responseNext = response.nextUpdate;
       if (!responseNext)
         continue;
 
@@ -119,12 +144,7 @@ function initOCSP(app, options) {
         res.json({ response: ocspResBase64 });
 
         // Try parsing and caching response
-        try {
-          var ocsp = der.decodeOCSP(ocspResRaw);
-        } catch (e) {
-          return;
-        }
-        cacheAdd(req.params.id, ocspResBase64, ocsp);
+        cacheAdd(req.params.id, ocspResBase64, ocspResRaw);
       });
     }).on('error', function(err) {
       res.json(500, { error: true, reason: err.message });
