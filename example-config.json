@@ -2,9 +2,12 @@
   "port": 9000,
   "host": "127.0.0.1",
   "sni": {
-    "example.com": {
-      "cert": "keys/cert.pem",
-      "key": "keys/key.pem"
+    "enabled": true,
+    "store": {
+      "example.com": {
+        "cert": "keys/cert.pem",
+        "key": "keys/key.pem"
+      }
     }
   }
 }

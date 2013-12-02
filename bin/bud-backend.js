@@ -17,14 +17,14 @@ try {
 
 // Load SNI certificates
 if (conf.sni) {
-  Object.keys(conf.sni).forEach(function(name) {
-    var sni = conf.sni[name];
+  Object.keys(conf.sni.store).forEach(function(name) {
+    var sni = conf.sni.store[name];
 
     var cert = fs.readFileSync(sni.cert);
     var key = fs.readFileSync(sni.key);
 
-    conf.sni[name].cert = cert.toString();
-    conf.sni[name].key = key.toString();
+    conf.sni.store[name].cert = cert.toString();
+    conf.sni.store[name].key = key.toString();
   });
 }
 
