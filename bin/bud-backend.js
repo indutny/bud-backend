@@ -28,7 +28,7 @@ if (conf.sni) {
   });
 }
 
-bud.create(conf).listen(conf.port, conf.host, function() {
+bud.createServer(conf).listen(conf.port, conf.host, function() {
   var addr = this.address();
   console.log('bud.js listening on %s:%d', addr.host, addr.port);
 });
