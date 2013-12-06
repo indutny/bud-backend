@@ -55,6 +55,14 @@ bud.createServer({
   ocsp: {
     enabled: true,
 
+    // Optional, filter OCSP urls
+    filter: function (url, callback) {
+      if (/* url is known and whitelisted */)
+        callback(null);
+      else
+        callback(new Error('Url is not whitelisted'));
+    },
+
     // Optional
     store: function (key, value, maxTime, callback) {
       // Should store `value` under the `key` with maximum TTL `maxTime`
