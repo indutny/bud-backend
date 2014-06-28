@@ -20,11 +20,18 @@ if (conf.sni) {
   Object.keys(conf.sni.store).forEach(function(name) {
     var sni = conf.sni.store[name];
 
-    var cert = fs.readFileSync(sni.cert);
-    var key = fs.readFileSync(sni.key);
+    if (Array.isArray(sni.cert))
+      var cert = sni.cert.map(loadFile);
+    else
+      var cert = fs.readFileSync(sni.cert).toString();
+    if (Array.isArray(sni.key))
+      var key = sni.key.map(loadFile);
+    else
+      var key = fs.readFileSync(sni.key).toString();
 
-    conf.sni.store[name].cert = cert.toString();
-    conf.sni.store[name].key = key.toString();
+    conf.sni.store[name].cert = cert;
+    conf.sni.store[name].key = key;
+    conf.sni.store[name].passphrase = sni.passphrase;
   });
 }
 
@@ -32,3 +39,7 @@ bud.createServer(conf).listen(conf.port, conf.host, function() {
   var addr = this.address();
   console.log('bud.js listening on %s:%d', addr.host, addr.port);
 });
+
+function laodFile(file) {
+  return fs.readFileSync(file).toString();
+}
