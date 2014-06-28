@@ -40,6 +40,6 @@ bud.createServer(conf).listen(conf.port, conf.host, function() {
   console.log('bud.js listening on %s:%d', addr.host, addr.port);
 });
 
-function laodFile(file) {
+function loadFile(file) {
   return fs.readFileSync(file).toString();
 }
