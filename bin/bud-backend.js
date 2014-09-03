@@ -33,6 +33,7 @@ if (conf.sni) {
     conf.sni.store[name].key = key;
     conf.sni.store[name].passphrase = sni.passphrase;
     conf.sni.store[name].ciphers = sni.ciphers;
+    conf.sni.store[name].npn = sni.npn;
   });
 }
 
