@@ -32,6 +32,7 @@ if (conf.sni) {
     conf.sni.store[name].cert = cert;
     conf.sni.store[name].key = key;
     conf.sni.store[name].passphrase = sni.passphrase;
+    conf.sni.store[name].ciphers = sni.ciphers;
   });
 }
 
