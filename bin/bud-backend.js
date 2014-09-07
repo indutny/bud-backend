@@ -34,6 +34,7 @@ if (conf.sni) {
     conf.sni.store[name].passphrase = sni.passphrase;
     conf.sni.store[name].ciphers = sni.ciphers;
     conf.sni.store[name].npn = sni.npn;
+    conf.sni.store[name].ticket_key = sni.ticket_key;
   });
 }
 
