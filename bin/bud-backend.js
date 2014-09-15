@@ -35,6 +35,7 @@ if (conf.sni) {
     conf.sni.store[name].ciphers = sni.ciphers;
     conf.sni.store[name].npn = sni.npn;
     conf.sni.store[name].ticket_key = sni.ticket_key;
+    conf.sni.store[name].server_preference = sni.server_preference;
   });
 }
 
