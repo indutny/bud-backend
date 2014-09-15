@@ -1,6 +1,6 @@
 {
   "name": "bud-backend",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "Example backend server for Bud",
   "main": "lib/bud-backend.js",
   "bin": {
