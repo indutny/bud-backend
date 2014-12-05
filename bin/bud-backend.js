@@ -2,7 +2,8 @@
 var bud = require('..');
 var fs = require('fs');
 var argv = require('optimist')
-    .usage('Usage: $0 --conf config.json')
+    .usage('Usage: $0 --config config.json')
+    .alias('c', 'config')
     .demand(['config'])
     .argv;
 
@@ -41,7 +42,7 @@ if (conf.sni) {
 
 bud.createServer(conf).listen(conf.port, conf.host, function() {
   var addr = this.address();
-  console.log('bud.js listening on %s:%d', addr.host, addr.port);
+  console.log('bud.js listening on %s:%d', addr.address, addr.port);
 });
 
 function loadFile(file) {
